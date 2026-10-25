@@ -31,5 +31,12 @@ let package = Package(
             path: "Tests/ClaudoCoreTests",
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
+        // The app's pure helpers: Today's layout and the words rows print.
+        .testTarget(
+            name: "ClaudoTests",
+            dependencies: ["Claudo", "ClaudoCore"],
+            path: "Tests/ClaudoTests",
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
     ]
 )
