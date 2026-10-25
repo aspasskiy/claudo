@@ -30,16 +30,35 @@ else's working hours moves to a weekday. The rules are in `Sources/ClaudoCore/Pl
 ## Requirements
 
 - macOS 14 or later
-- Swift 6 toolchain (Xcode 16 or later, or the matching Command Line Tools)
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) installed and logged in. Claudo looks for `claude` in
   `~/.local/bin`, `/opt/homebrew/bin`, `/usr/local/bin` and `~/.claude/local`.
+- To build from source: Swift 6 toolchain (Xcode 16 or later, or the matching Command Line Tools)
 
 ## Install
+
+**Homebrew**
+
+```sh
+brew tap aspasskiy/claudo https://github.com/aspasskiy/claudo
+brew trust --cask aspasskiy/claudo/claudo   # Homebrew only loads casks from other taps once trusted
+brew install --cask claudo
+```
+
+Update with `brew upgrade --cask claudo`, remove with `brew uninstall --cask claudo` (`--zap` also deletes the
+board and the settings).
+
+**Download.** Get `Claudo-<version>.dmg` from [Releases](https://github.com/aspasskiy/claudo/releases), open it and
+drag Claudo to Applications (a `.zip` with the same app is there too). Releases are signed with Developer ID and
+notarized by Apple, so they open without Gatekeeper warnings.
+
+**From source.**
 
 ```sh
 ./build.sh             # builds build/Claudo.app (release, ad-hoc signed)
 ./build.sh --install   # also copies it to /Applications and (re)launches it
 ```
+
+A source build is signed ad hoc and only meant for your own Mac.
 
 Claudo lives in the menu bar only (no Dock icon). Click the icon, then **✦ Plan with Claude** to make the first board.
 
@@ -154,6 +173,9 @@ Without `--board` it reads your real board, read-only; it never writes. The flag
 `Sources/Claudo/Render.swift`. How the planner, merge and UI are meant to behave: [DESIGN.md](DESIGN.md).
 See [CONTRIBUTING.md](CONTRIBUTING.md) before sending a change.
 
+`./build.sh --release` signs the app with Developer ID, notarizes it and writes `build/Claudo-<version>.zip` and
+`.dmg` for the release, with their SHA-256 (the zip's goes into `Casks/claudo.rb`).
+
 ## Project layout
 
 ```
@@ -163,7 +185,8 @@ Sources/claudo-cli/   the terminal harness
 Tests/                ClaudoCoreTests (no model calls) and ClaudoTests (the app's pure helpers)
 Fixtures/             synthetic boards for tests and renders
 Resources/, tools/    the app icon and the script that draws it
-build.sh, Info.plist  app bundle
+build.sh, Info.plist  app bundle and release
+Casks/claudo.rb       Homebrew cask (this repo doubles as its tap)
 ```
 
 ## License
