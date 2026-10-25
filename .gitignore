@@ -1,0 +1,11 @@
+.DS_Store
+
+# SwiftPM and build.sh output
+.build/
+.swiftpm/
+build/
+
+# Xcode and editors
+*.xcodeproj/
+xcuserdata/
+.vscode/
