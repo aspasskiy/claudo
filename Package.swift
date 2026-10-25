@@ -11,6 +11,12 @@ let package = Package(
             path: "Sources/ClaudoCore",
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
+        .executableTarget(
+            name: "Claudo",
+            dependencies: ["ClaudoCore"],
+            path: "Sources/Claudo",
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
         // Terminal harness: print the digest or run a plan without the UI.
         .executableTarget(
             name: "claudo-cli",
